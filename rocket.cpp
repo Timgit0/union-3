@@ -65,7 +65,13 @@ public:
     {
         for (int i = 0; i < parts.capacity(); i++)
         {
-
+            totalMass += parts[i].mass;
+            if (type(parts[i]) == FuelTank) totalFuel += parts[i].fuel;
+            if (type(parts[i]) == Engine)
+            {
+                totalThrustForward += parts[i].thrustForward;
+                totalAngularThrust += parts[i].angularThrust * sqrt(parts[i].relativeX*parts[i].relativeX + parts[i].relativeY*parts[i].relativeY);
+            }
         }
     }
     void CalculateAcceleration()
@@ -77,6 +83,6 @@ public:
     }
     void CalculatePosition()
     {
-        dx += ddx; dy += ddy; dalpha += ddalpha; x += dx; if (x > (y + 100)*2*3.1415926535) x -= (y + 100)*2*3.1415926535; y += dy; alpha += dalpha;
+        dx += ddx; dy += ddy; dalpha += ddalpha; x += dx; if (x > (y + 100)*2*3.1415926535) x -= (y + 100)*2*3.1415926535; y += dy; alpha += dalpha; if (alpha > 2*3.1415926535) alpha -= 2*3.1415926535;
     }
 };
