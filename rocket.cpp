@@ -8,20 +8,21 @@ public:
     double relativeX, relativeY;
     double width, height;
     double mass;
+    int cost;
 
-    RocketPart(int _width = 1, int _height = 2, int _mass = 1)
+    RocketPart(int _width = 1, int _height = 2, int _mass = 1, int _cost = 1000)
     {
-        relativeX = 0; relativeY = 0; width = _width; height = _height; mass = _mass;
+        relativeX = 0; relativeY = 0; width = _width; height = _height; mass = _mass; cost = _cost;
     }
-    RocketPart(RocketPart anotherPart, std :: string direction, int _width = 1, int _height = 2, int _mass = 1)
+    RocketPart(RocketPart anotherPart, char direction, int _width = 1, int _height = 2, int _mass = 1, int _cost = 1000)
     {
-        width = _width; height = _height; mass = _mass;
+        width = _width; height = _height; mass = _mass; cost = _cost;
         switch (direction)
         {
-            case "top": relativeX = anotherPart.relativeX; relativeY = anotherPart.relativeY - (anotherPart.height + height)/2; break;
-            case "left": relativeY = anotherPart.relativeY; relativeX = anotherPart.relativeX - (anotherPart.width + width)/2; break;
-            case "bottom": relativeX = anotherPart.relativeX; relativeY = anotherPart.relativeY + (anotherPart.height + height)/2; break;
-            case "right": relativeY = anotherPart.relativeY; relativeX = anotherPart.relativeX + (anotherPart.width + width)/2; break;
+            case 't': relativeX = anotherPart.relativeX; relativeY = anotherPart.relativeY - (anotherPart.height + height)/2; break;
+            case 'l': relativeY = anotherPart.relativeY; relativeX = anotherPart.relativeX - (anotherPart.width + width)/2; break;
+            case 'b': relativeX = anotherPart.relativeX; relativeY = anotherPart.relativeY + (anotherPart.height + height)/2; break;
+            case 'r': relativeY = anotherPart.relativeY; relativeX = anotherPart.relativeX + (anotherPart.width + width)/2; break;
             default: relativeX = anotherPart.relativeX; relativeY = anotherPart.relativeY; break;
         }
     }
@@ -84,5 +85,9 @@ public:
     void CalculatePosition()
     {
         dx += ddx; dy += ddy; dalpha += ddalpha; x += dx; if (x > (y + 100)*2*3.1415926535) x -= (y + 100)*2*3.1415926535; y += dy; alpha += dalpha; if (alpha > 2*3.1415926535) alpha -= 2*3.1415926535;
+    }
+    Rocket()
+    {
+        x = 0; y = 0; alpha = 0; dx = 0; dy = 0; dalpha = 0; ddx = 0; ddy = 10; ddalpha = 0; parts = new vector<RocketPart>();
     }
 };
